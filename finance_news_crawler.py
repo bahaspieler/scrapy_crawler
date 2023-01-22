@@ -22,8 +22,8 @@ class NewsScrapeSpider(scrapy.Spider):
     name = 'news_spider'
     start_urls = ['https://finance.yahoo.com/news/']
     custom_settings = {
-        'FEED_URI': 'finance_news.json',
-        'FEED_FORMAT': 'json',
+        'FEED_URI': 'finance_news.csv',
+        'FEED_FORMAT': 'csv',
         'FEED_EXPORT_ENCODING': 'utf-8'
     }
 
