@@ -2,6 +2,9 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import ChromeType
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -13,6 +16,7 @@ import logging
 from logging import config
 from conf import *
 from pathlib import Path
+from sys import platform
 
 config.dictConfig(LOGGING)
 logger = logging.getLogger('main')
@@ -37,8 +41,11 @@ class NewsScrapeSpider(scrapy.Spider):
         options.add_argument("--start-maximized")
         # setting a user-data-dir to keep the cache and other states
         options.add_argument(f"user-data-dir={chrome_user_data_dir}")
-        chrome_path = Path(BASE_DIR, 'drivers/chromedriver.exe')
-        driver = webdriver.Chrome(executable_path=chrome_path, options=options)
+        if platform != 'linux':
+            chrome_path = Path(BASE_DIR, 'drivers/chromedriver.exe')
+            driver = webdriver.Chrome(executable_path=chrome_path, options=options)
+        else:
+            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()), options=options)
         logger.info('selenium driver initiated.')
         logger.info(f'scroll pause time: {SCROLL_PAUSE_TIME}')
         logger.info(f'getting into the link: {self.start_urls[0]}')
