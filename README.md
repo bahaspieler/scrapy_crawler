@@ -6,7 +6,7 @@ A crawler to scrape news details. Advertisement news have been ignored intention
 1. Install chromium if you don't have chromium already.  
    `sudo apt install chromium-browser`
 
-2. Install the python packages. You may use a virtual environment to install the packages.
+2. Install the python packages. You may use a virtual environment to install the packages.  
     `pip install -r requirements.txt`  
 
 ## Installation Guide for Windows.
